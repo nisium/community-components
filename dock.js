@@ -1,19 +1,33 @@
 /**
- * Nisium Dock — v1.0.1
+ * Nisium Dock — v1.0.2
  * Loaded on every Nisium Community Component cloneable via:
  * <script src="https://cdn.jsdelivr.net/gh/nisium/community-components@main/dock.js" defer></script>
  */
 (function () {
   var JSON_URL = "https://raw.githubusercontent.com/nisium/community-components/main/components.json?v=" + Date.now();
+  var initialized = false;
+
+  function getDockElements() {
+    return {
+      nameEl: document.querySelector('[data-dock="name"]'),
+      cloneBtn: document.querySelector('[data-dock="clone"]'),
+      prevBtn: document.querySelector('[data-dock="prev"]'),
+      counterEl: document.querySelector('[data-dock="counter"]'),
+      nextBtn: document.querySelector('[data-dock="next"]')
+    };
+  }
+
+  function hasDock(elements) {
+    return elements.nameEl || elements.cloneBtn || elements.prevBtn || elements.counterEl || elements.nextBtn;
+  }
 
   function initDock() {
-    var nameEl = document.querySelector('[data-dock="name"]');
-    var cloneBtn = document.querySelector('[data-dock="clone"]');
-    var prevBtn = document.querySelector('[data-dock="prev"]');
-    var counterEl = document.querySelector('[data-dock="counter"]');
-    var nextBtn = document.querySelector('[data-dock="next"]');
+    if (initialized) return;
 
-    if (!nameEl && !cloneBtn && !prevBtn && !counterEl && !nextBtn) return;
+    var elements = getDockElements();
+    if (!hasDock(elements)) return;
+
+    initialized = true;
 
     fetch(JSON_URL)
       .then(function (res) { return res.json(); })
@@ -44,21 +58,16 @@
         var prev = index > 0 ? data[index - 1] : null;
         var next = index < total - 1 ? data[index + 1] : null;
 
-        applyDock(nameEl, cloneBtn, counterEl, prevBtn, nextBtn, current, prev, next, index, total);
-        watchName(nameEl, current.name);
+        if (elements.nameEl) elements.nameEl.textContent = current.name;
+        if (elements.cloneBtn) elements.cloneBtn.href = current.clone;
+        if (elements.counterEl) elements.counterEl.textContent = (index + 1) + " / " + total;
+
+        setNav(elements.prevBtn, prev);
+        setNav(elements.nextBtn, next);
       })
       .catch(function (err) {
         console.warn("Nisium Dock: Error loading JSON", err);
       });
-  }
-
-  function applyDock(nameEl, cloneBtn, counterEl, prevBtn, nextBtn, current, prev, next, index, total) {
-    if (nameEl) nameEl.textContent = current.name;
-    if (cloneBtn) cloneBtn.href = current.clone;
-    if (counterEl) counterEl.textContent = (index + 1) + " / " + total;
-
-    setNav(prevBtn, prev);
-    setNav(nextBtn, next);
   }
 
   function setNav(btn, item) {
@@ -75,29 +84,41 @@
     }
   }
 
-  function watchName(nameEl, correctName) {
-    if (!nameEl || !window.MutationObserver) return;
+  function startDockWatcher() {
+    initDock();
 
-    var observer = new MutationObserver(function () {
-      if (nameEl.textContent !== correctName) {
-        nameEl.textContent = correctName;
+    var tries = 0;
+    var maxTries = 40;
+
+    var interval = setInterval(function () {
+      initDock();
+      tries += 1;
+
+      if (initialized || tries >= maxTries) {
+        clearInterval(interval);
       }
-    });
+    }, 250);
 
-    observer.observe(nameEl, {
-      childList: true,
-      subtree: true,
-      characterData: true
-    });
+    if (window.MutationObserver) {
+      var observer = new MutationObserver(function () {
+        initDock();
+        if (initialized) observer.disconnect();
+      });
 
-    setTimeout(function () {
-      observer.disconnect();
-    }, 5000);
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+
+      setTimeout(function () {
+        observer.disconnect();
+      }, 10000);
+    }
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initDock);
+    document.addEventListener("DOMContentLoaded", startDockWatcher);
   } else {
-    initDock();
+    startDockWatcher();
   }
 })();
