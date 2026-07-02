@@ -1,7 +1,67 @@
 [
   {
-    "name": "NaN",
-    "url": "https://your-domain.webflow.io/",
-    "clone": "https://webflow.com/made-in-webflow/website/slug"
+    "name": "Light/Dark Mode",
+    "url": "https://nisium-theme-toggle.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/nisium-theme-toggle"
+  },
+  {
+    "name": "Store Locator",
+    "url": "https://cms-store-locator.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/cms-store-locator"
+  },
+  {
+    "name": "Dynamic Timetable",
+    "url": "https://dynamic-opening-hours.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/dynamic-opening-hours"
+  },
+  {
+    "name": "Directional Hover List",
+    "url": "https://directional-hover-list.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/directional-hover-list"
+  },
+  {
+    "name": "Dynamic Opening Hours v2",
+    "url": "https://dynamic-opening-hours-v2.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/dynamic-opening-hours-v2"
+  },
+  {
+    "name": "Animated Logo Wall",
+    "url": "https://animated-logo-wall.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/animated-logo-wall"
+  },
+  {
+    "name": "Magnetic Pull Button",
+    "url": "https://magnetic-pull-button.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/magnetic-pull-button"
+  },
+  {
+    "name": "Hover Magnetic Button",
+    "url": "https://hover-magnetic-button.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/hover-magnetic-button"
+  },
+  {
+    "name": "CMS Store Locator with Mapbox & Leaflet",
+    "url": "https://store-locator-with-mapbox-leaflet.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/store-locator-with-mapbox-leaflet"
+  },
+  {
+    "name": "Spotlight Text on Hover",
+    "url": "https://spotlight-text-on-hover.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/spotlight-text-on-hover"
+  },
+  {
+    "name": "Pulse Dot",
+    "url": "https://animated-status-indicator.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/animated-status-indicator"
+  },
+  {
+    "name": "Animated Dot Grid Background",
+    "url": "https://animated-dot-grid-background.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/animated-dot-grid-background"
+  },
+  {
+    "name": "Animated Rainbow Text on Hover",
+    "url": "https://animated-rainbow-text-on-hover.webflow.io/",
+    "clone": "https://webflow.com/made-in-webflow/website/animated-rainbow-text-on-hover"
   }
 ]
