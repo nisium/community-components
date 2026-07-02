@@ -1,5 +1,5 @@
 /**
- * Nisium Dock — v1.0.0
+ * Nisium Dock — v1.0.1
  * Loaded on every Nisium Community Component cloneable via:
  * <script src="https://cdn.jsdelivr.net/gh/nisium/community-components@main/dock.js" defer></script>
  */
@@ -44,16 +44,21 @@
         var prev = index > 0 ? data[index - 1] : null;
         var next = index < total - 1 ? data[index + 1] : null;
 
-        if (nameEl) nameEl.textContent = current.name;
-        if (cloneBtn) cloneBtn.href = current.clone;
-        if (counterEl) counterEl.textContent = (index + 1) + " / " + total;
-
-        setNav(prevBtn, prev);
-        setNav(nextBtn, next);
+        applyDock(nameEl, cloneBtn, counterEl, prevBtn, nextBtn, current, prev, next, index, total);
+        watchName(nameEl, current.name);
       })
       .catch(function (err) {
         console.warn("Nisium Dock: Error loading JSON", err);
       });
+  }
+
+  function applyDock(nameEl, cloneBtn, counterEl, prevBtn, nextBtn, current, prev, next, index, total) {
+    if (nameEl) nameEl.textContent = current.name;
+    if (cloneBtn) cloneBtn.href = current.clone;
+    if (counterEl) counterEl.textContent = (index + 1) + " / " + total;
+
+    setNav(prevBtn, prev);
+    setNav(nextBtn, next);
   }
 
   function setNav(btn, item) {
@@ -68,6 +73,26 @@
       btn.style.opacity = "0.25";
       btn.style.pointerEvents = "none";
     }
+  }
+
+  function watchName(nameEl, correctName) {
+    if (!nameEl || !window.MutationObserver) return;
+
+    var observer = new MutationObserver(function () {
+      if (nameEl.textContent !== correctName) {
+        nameEl.textContent = correctName;
+      }
+    });
+
+    observer.observe(nameEl, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+
+    setTimeout(function () {
+      observer.disconnect();
+    }, 5000);
   }
 
   if (document.readyState === "loading") {
