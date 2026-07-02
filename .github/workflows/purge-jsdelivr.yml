@@ -1,0 +1,20 @@
+name: Purge jsDelivr Cache
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge dock.js
+        uses: gacts/purge-jsdelivr-cache@v1
+        with:
+          url: https://cdn.jsdelivr.net/gh/nisium/community-components@main/dock.js
+
+      - name: Purge components.json
+        uses: gacts/purge-jsdelivr-cache@v1
+        with:
+          url: https://cdn.jsdelivr.net/gh/nisium/community-components@main/components.json
