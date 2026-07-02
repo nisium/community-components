@@ -4,7 +4,7 @@
  * <script src="https://cdn.jsdelivr.net/gh/nisium/community-components@main/dock.js" defer></script>
  */
 (function () {
-  var JSON_URL = "https://cdn.jsdelivr.net/gh/nisium/community-components@main/components.json";
+  var JSON_URL = "https://raw.githubusercontent.com/nisium/community-components/main/components.json?v=" + Date.now();
 
   function initDock() {
     var nameEl = document.querySelector('[data-dock="name"]');
