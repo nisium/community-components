@@ -13,7 +13,6 @@
     var counterEl = document.querySelector('[data-dock="counter"]');
     var nextBtn = document.querySelector('[data-dock="next"]');
 
-    // No dock markup on this page — nothing to do
     if (!nameEl && !cloneBtn && !prevBtn && !counterEl && !nextBtn) return;
 
     fetch(JSON_URL)
@@ -23,13 +22,21 @@
 
         var host = window.location.hostname;
         var index = -1;
+
         for (var i = 0; i < data.length; i++) {
           try {
-            if (new URL(data[i].url).hostname === host) { index = i; break; }
+            if (new URL(data[i].url).hostname === host) {
+              index = i;
+              break;
+            }
           } catch (e) {
-            if (data[i].url.indexOf(host) !== -1) { index = i; break; }
+            if (data[i].url.indexOf(host) !== -1) {
+              index = i;
+              break;
+            }
           }
         }
+
         if (index === -1) index = 0;
 
         var total = data.length;
@@ -37,11 +44,7 @@
         var prev = index > 0 ? data[index - 1] : null;
         var next = index < total - 1 ? data[index + 1] : null;
 
-        if (nameEl) {
-          var textNode = nameEl.querySelector("*");
-          if (textNode) textNode.textContent = current.name;
-          else nameEl.textContent = current.name;
-        }
+        if (nameEl) nameEl.textContent = current.name;
         if (cloneBtn) cloneBtn.href = current.clone;
         if (counterEl) counterEl.textContent = (index + 1) + " / " + total;
 
@@ -49,12 +52,13 @@
         setNav(nextBtn, next);
       })
       .catch(function (err) {
-        console.warn("Nisium Dock: Error Loading JSON", err);
+        console.warn("Nisium Dock: Error loading JSON", err);
       });
   }
 
   function setNav(btn, item) {
     if (!btn) return;
+
     if (item) {
       btn.href = item.url;
       btn.style.opacity = "1";
